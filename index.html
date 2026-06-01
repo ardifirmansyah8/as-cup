@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AS Cup</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #5d3b8e 0%, #8b5fbf 100%);
+        color: #1a1a1a;
+        padding: 24px 16px;
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      header {
+        text-align: center;
+        margin-bottom: 32px;
+        color: #fff;
+      }
+      header h1 {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin-bottom: 8px;
+      }
+      header p {
+        opacity: 0.9;
+        font-size: 14px;
+      }
+      .section {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+      .section h2 {
+        font-size: 20px;
+        margin-bottom: 16px;
+        color: #5d3b8e;
+        border-left: 4px solid #c4a1e0;
+        padding-left: 12px;
+      }
+      .groups {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      @media (max-width: 768px) {
+        .groups {
+          grid-template-columns: 1fr;
+        }
+      }
+      .group-card {
+        background: linear-gradient(135deg, #f8f5fb 0%, #ebe2f5 100%);
+        border-radius: 12px;
+        padding: 16px;
+        border-top: 4px solid #5d3b8e;
+      }
+      .group-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #5d3b8e;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .group-title .badge {
+        background: #5d3b8e;
+        color: #fff;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-weight: 600;
+      }
+      .pair-list {
+        list-style: none;
+      }
+      .pair-list li {
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 6px;
+        margin-bottom: 6px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .schedule-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      .schedule-table th {
+        background: #5d3b8e;
+        color: #fff;
+        padding: 10px 8px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: 0.3px;
+      }
+      .schedule-table td {
+        padding: 10px 8px;
+        border-bottom: 1px solid #e5e5e5;
+        vertical-align: middle;
+      }
+      .schedule-table tr:hover td {
+        background: #f5f0fa;
+      }
+      .schedule-table tr.phase-row td {
+        background: #5d3b8e;
+        color: #fff;
+        text-align: center;
+        font-weight: 700;
+        padding: 8px;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+      }
+      .schedule-table tr.knockout-row td {
+        background: #ebe2f5;
+      }
+      .schedule-table tr.knockout-row:hover td {
+        background: #d0c4e8;
+      }
+      .schedule-table .match-num {
+        font-weight: 700;
+        color: #5d3b8e;
+      }
+      .schedule-table .time {
+        font-weight: 600;
+        color: #1a1a1a;
+        white-space: nowrap;
+      }
+      .schedule-table .grp {
+        display: inline-block;
+        background: #5d3b8e;
+        color: #fff;
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 700;
+        margin-left: 4px;
+      }
+      .schedule-table .empty {
+        color: #999;
+        font-style: italic;
+        font-size: 12px;
+      }
+
+      .mini-group-card {
+        background: linear-gradient(135deg, #f5f0fa 0%, #ebe2f5 100%);
+        border-radius: 12px;
+        padding: 18px;
+        border: 2px solid #c4a1e0;
+      }
+      .mini-group-card h4 {
+        color: #5d3b8e;
+        margin-bottom: 10px;
+        font-size: 15px;
+      }
+      .mini-group-card ul {
+        list-style: none;
+      }
+      .mini-group-card li {
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 6px;
+        margin-bottom: 6px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .bracket {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        margin-top: 12px;
+        overflow-x: auto;
+      }
+      @media (max-width: 900px) {
+        .bracket {
+          grid-template-columns: 1fr;
+        }
+      }
+      .bracket-col {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        gap: 8px;
+      }
+      .bracket-col h4 {
+        text-align: center;
+        background: #5d3b8e;
+        color: #fff;
+        padding: 6px;
+        border-radius: 6px;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+      }
+      .bracket-col.final-col h4 {
+        background: #c4a1e0;
+        color: #1a1a1a;
+      }
+      .bracket-match {
+        background: #f8f5fb;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-size: 11px;
+        min-height: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .bracket-match .team {
+        padding: 3px 4px;
+      }
+      .bracket-match .vs {
+        text-align: center;
+        color: #999;
+        font-size: 9px;
+        font-weight: 600;
+        padding: 1px 0;
+      }
+      .bracket-match.final {
+        background: #c4a1e0;
+        border-color: #8b5fbf;
+        font-weight: 700;
+      }
+      .bracket-match.third {
+        background: #8b5fbf;
+        border-color: #5d3b8e;
+        color: #fff;
+        font-weight: 700;
+      }
+      .bracket-label {
+        font-size: 9px;
+        color: #5d3b8e;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🎾 AS Cup</h1>
+        <p>2 lapangan · 12 pasangan · 10:00 – 17:00</p>
+        <p style="margin-top: 6px; font-size: 14px;">
+          📍
+          <a
+            href="https://www.google.com/maps/place/Vlocity+Arena/data=!4m2!3m1!1s0x0:0xacb651b49194e2c7?sa=X&ved=1t:2428&ictx=111"
+            target="_blank"
+            rel="noopener"
+            style="color: #fff; font-weight: 700; text-decoration: underline;"
+            ><strong>Vlocity Arena</strong> ↗</a
+          >
+        </p>
+        <p style="margin-top: 6px; font-size: 14px;">
+          👕 <strong>Dresscode:</strong> Jersey Lilac + Celana Putih
+        </p>
+      </header>
+
+      <!-- GRUP -->
+      <div class="section">
+        <h2>👥 Pembagian Grup</h2>
+        <div class="groups">
+          <div class="group-card">
+            <div class="group-title">
+              Grup A <span class="badge">4 pasangan</span>
+            </div>
+            <ul class="pair-list">
+              <li>Elis – Abet</li>
+              <li>Ratri – Angga</li>
+              <li>Noshi – Alem</li>
+              <li>Ame – Ph</li>
+            </ul>
+          </div>
+          <div class="group-card">
+            <div class="group-title">
+              Grup B <span class="badge">4 pasangan</span>
+            </div>
+            <ul class="pair-list">
+              <li>Adam – Sasty</li>
+              <li>Isti – Ardi</li>
+              <li>Icha – Upi</li>
+              <li>Deeta – Baska</li>
+            </ul>
+          </div>
+          <div class="group-card">
+            <div class="group-title">
+              Grup C <span class="badge">4 pasangan</span>
+            </div>
+            <ul class="pair-list">
+              <li>Elda – Radit</li>
+              <li>Harish – Real</li>
+              <li>Misda – Renfil</li>
+              <li>Gazik – Savira</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- MINI GRUP -->
+      <div class="section">
+        <h2>🔸 Mini-Grup / Grup D (Round-robin)</h2>
+        <div class="mini-group-card">
+          <h4>Peserta: peringkat 3 dari masing-masing grup</h4>
+          <ul>
+            <li><strong>MG-1 (M11, 13:20):</strong> 3rd A vs 3rd B</li>
+            <li><strong>MG-2 (M12, 13:50):</strong> 3rd A vs 3rd C</li>
+            <li><strong>MG-3 (M13, 14:20):</strong> 3rd B vs 3rd C</li>
+          </ul>
+          <p style="margin-top: 10px; font-size: 13px">
+            <strong>Lolos ke 8 besar:</strong> 2 teratas mini-grup diperlakukan
+            sebagai <em>Juara Grup D</em> (peringkat 1) dan
+            <em>Runner-up Grup D</em> (peringkat 2) di babak gugur.
+          </p>
+        </div>
+      </div>
+
+      <!-- JADWAL -->
+      <div class="section">
+        <h2>📅 Jadwal Lengkap</h2>
+        <table class="schedule-table">
+          <thead>
+            <tr class="phase-row">
+              <td colspan="4">BABAK GRUP — 10:00 s/d 13:00</td>
+            </tr>
+            <tr>
+              <th style="width: 60px">Match</th>
+              <th style="width: 70px">Waktu</th>
+              <th>Lapangan 1</th>
+              <th>Lapangan 2</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="match-num">M1</td>
+              <td class="time">10:00</td>
+              <td>Elis-Abet vs Ratri-Angga <span class="grp">A</span></td>
+              <td>Elda-Radit vs Harish-Real <span class="grp">C</span></td>
+            </tr>
+            <tr>
+              <td class="match-num">M2</td>
+              <td class="time">10:20</td>
+              <td>Noshi-Alem vs Ame-Ph <span class="grp">A</span></td>
+              <td>Adam-Sasty vs Isti-Ardi <span class="grp">B</span></td>
+            </tr>
+            <tr>
+              <td class="match-num">M3</td>
+              <td class="time">10:40</td>
+              <td>Icha-Upi vs Deeta-Baska <span class="grp">B</span></td>
+              <td>Misda-Renfil vs Gazik-Savira <span class="grp">C</span></td>
+            </tr>
+            <tr>
+              <td class="match-num">M4</td>
+              <td class="time">11:00</td>
+              <td>Elis-Abet vs Noshi-Alem <span class="grp">A</span></td>
+              <td>Ratri-Angga vs Ame-Ph <span class="grp">A</span></td>
+            </tr>
+            <tr>
+              <td class="match-num">M5</td>
+              <td class="time">11:20</td>
+              <td>Adam-Sasty vs Icha-Upi <span class="grp">B</span></td>
+              <td>Isti-Ardi vs Deeta-Baska <span class="grp">B</span></td>
+            </tr>
+            <tr>
+              <td class="match-num">M6</td>
+              <td class="time">11:40</td>
+              <td>Elis-Abet vs Ame-Ph <span class="grp">A</span></td>
+              <td>Elda-Radit vs Misda-Renfil <span class="grp">C</span></td>
+            </tr>
+            <tr>
+              <td class="match-num">M7</td>
+              <td class="time">12:00</td>
+              <td>Ratri-Angga vs Noshi-Alem <span class="grp">A</span></td>
+              <td>Harish-Real vs Gazik-Savira <span class="grp">C</span></td>
+            </tr>
+            <tr>
+              <td class="match-num">M8</td>
+              <td class="time">12:20</td>
+              <td>Adam-Sasty vs Deeta-Baska <span class="grp">B</span></td>
+              <td>Isti-Ardi vs Icha-Upi <span class="grp">B</span></td>
+            </tr>
+            <tr>
+              <td class="match-num">M9</td>
+              <td class="time">12:40</td>
+              <td>Elda-Radit vs Gazik-Savira <span class="grp">C</span></td>
+              <td>Harish-Real vs Misda-Renfil <span class="grp">C</span></td>
+            </tr>
+
+            <tr class="phase-row">
+              <td colspan="4">MINI-GRUP — 13:20 s/d 14:40 (jeda 10 menit antar match)</td>
+            </tr>
+
+            <tr class="knockout-row">
+              <td class="match-num">M11</td>
+              <td class="time">13:20</td>
+              <td><strong>MG-1:</strong> 3rd A vs 3rd B</td>
+              <td><span class="empty"></span></td>
+            </tr>
+            <tr class="knockout-row">
+              <td class="match-num">M12</td>
+              <td class="time">13:50</td>
+              <td><strong>MG-2:</strong> 3rd A vs 3rd C</td>
+              <td><span class="empty"></span></td>
+            </tr>
+            <tr class="knockout-row">
+              <td class="match-num">M13</td>
+              <td class="time">14:20</td>
+              <td><strong>MG-3:</strong> 3rd B vs 3rd C</td>
+              <td><span class="empty"></span></td>
+            </tr>
+
+            <tr class="phase-row">
+              <td colspan="4">BABAK GUGUR — 14:40 s/d 17:00</td>
+            </tr>
+
+            <tr class="knockout-row">
+              <td class="match-num">M14</td>
+              <td class="time">14:40</td>
+              <td><strong>QF-1:</strong> Juara A vs Runner-up B</td>
+              <td><strong>QF-3:</strong> Juara B vs Runner-up A</td>
+            </tr>
+            <tr class="knockout-row">
+              <td class="match-num">M15</td>
+              <td class="time">15:00</td>
+              <td><strong>QF-2:</strong> Juara C vs Runner-up D</td>
+              <td><strong>QF-4:</strong> Juara D vs Runner-up C</td>
+            </tr>
+            <tr class="knockout-row">
+              <td class="match-num">M16</td>
+              <td class="time">15:40</td>
+              <td><strong>SF-1:</strong> Pemenang QF-1 vs Pemenang QF-2</td>
+              <td><strong>SF-2:</strong> Pemenang QF-3 vs Pemenang QF-4</td>
+            </tr>
+            <tr class="knockout-row">
+              <td class="match-num">M17</td>
+              <td class="time">16:20</td>
+              <td>
+                🥉 <strong>Perebutan Juara 3:</strong> Yang kalah SF-1 vs Yang
+                kalah SF-2
+              </td>
+              <td><span class="empty"></span></td>
+            </tr>
+            <tr class="knockout-row">
+              <td class="match-num">M18</td>
+              <td class="time">16:40</td>
+              <td>🏆 <strong>FINAL:</strong> Pemenang SF-1 vs Pemenang SF-2</td>
+              <td><span class="empty"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- BAGAN 8 BESAR -->
+      <div class="section">
+        <h2>🏆 Bagan Babak Gugur (8 Besar)</h2>
+        <div class="bracket">
+          <div class="bracket-col">
+            <h4>8 BESAR</h4>
+            <div class="bracket-match">
+              <div class="bracket-label">QF-1 · M14</div>
+              <div class="team">Juara A</div>
+              <div class="vs">vs</div>
+              <div class="team">Runner-up B</div>
+            </div>
+            <div class="bracket-match">
+              <div class="bracket-label">QF-2 · M15</div>
+              <div class="team">Juara C</div>
+              <div class="vs">vs</div>
+              <div class="team">Runner-up D (MG-2)</div>
+            </div>
+            <div class="bracket-match">
+              <div class="bracket-label">QF-3 · M14</div>
+              <div class="team">Juara B</div>
+              <div class="vs">vs</div>
+              <div class="team">Runner-up A</div>
+            </div>
+            <div class="bracket-match">
+              <div class="bracket-label">QF-4 · M15</div>
+              <div class="team">Juara D (MG-1)</div>
+              <div class="vs">vs</div>
+              <div class="team">Runner-up C</div>
+            </div>
+          </div>
+
+          <div class="bracket-col">
+            <h4>SEMIFINAL</h4>
+            <div class="bracket-match">
+              <div class="bracket-label">SF-1 · M16</div>
+              <div class="team">Pemenang QF-1</div>
+              <div class="vs">vs</div>
+              <div class="team">Pemenang QF-2</div>
+            </div>
+            <div class="bracket-match">
+              <div class="bracket-label">SF-2 · M16</div>
+              <div class="team">Pemenang QF-3</div>
+              <div class="vs">vs</div>
+              <div class="team">Pemenang QF-4</div>
+            </div>
+          </div>
+
+          <div class="bracket-col final-col">
+            <h4>FINAL</h4>
+            <div class="bracket-match final">
+              <div class="bracket-label" style="color: #1a1a1a">
+                FINAL · M18
+              </div>
+              <div class="team">Pemenang SF-1</div>
+              <div class="vs" style="color: #1a1a1a">vs</div>
+              <div class="team">Pemenang SF-2</div>
+            </div>
+          </div>
+
+          <div class="bracket-col">
+            <h4>JUARA 3</h4>
+            <div class="bracket-match third">
+              <div class="bracket-label" style="color: #fff">3rd · M17</div>
+              <div class="team">Kalah SF-1</div>
+              <div class="vs" style="color: #fff">vs</div>
+              <div class="team">Kalah SF-2</div>
+            </div>
+          </div>
+
+          <div class="bracket-col">
+            <h4>JUARA</h4>
+            <div
+              class="bracket-match"
+              style="
+                background: #c4a1e0;
+                border-color: #8b5fbf;
+                font-size: 13px;
+                font-weight: 700;
+                text-align: center;
+              "
+            >
+              <div>🥇</div>
+              <div style="font-size: 11px; margin-top: 4px">Pemenang Final</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

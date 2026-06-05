@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AS Cup</title>
+    <title>AS Fun Match Tennis</title>
     <style>
       * {
         box-sizing: border-box;
@@ -12,8 +12,8 @@
       }
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: linear-gradient(135deg, #5d3b8e 0%, #8b5fbf 100%);
-        color: #1a1a1a;
+        background: linear-gradient(135deg, #d4c0e8 0%, #ece0f8 100%);
+        color: #2a1a4a;
         padding: 24px 16px;
         min-height: 100vh;
       }
@@ -24,16 +24,68 @@
       header {
         text-align: center;
         margin-bottom: 32px;
-        color: #fff;
+        color: #5d3b8e;
+      }
+      .brand-mark {
+        font-size: 16px;
+        font-weight: 900;
+        letter-spacing: 4px;
+        color: #5d3b8e;
+        margin-bottom: 4px;
       }
       header h1 {
-        font-size: 30px;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        margin-bottom: 8px;
+        font-size: 48px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        line-height: 1;
+        margin-bottom: 4px;
+        color: #5d3b8e;
+        text-shadow:
+          2px 2px 0 #fff,
+          -2px -2px 0 #fff,
+          2px -2px 0 #fff,
+          -2px 2px 0 #fff,
+          0 4px 12px rgba(93, 59, 142, 0.25);
+      }
+      header .tennis-script {
+        font-family: "Brush Script MT", "Snell Roundhand", cursive;
+        font-size: 38px;
+        color: #5d3b8e;
+        font-weight: 400;
+        font-style: italic;
+        margin-bottom: 12px;
+        line-height: 1;
+      }
+      header .tagline {
+        font-size: 14px;
+        font-weight: 600;
+        color: #5d3b8e;
+        margin-bottom: 16px;
+        letter-spacing: 0.5px;
+      }
+      .info-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff;
+        color: #5d3b8e;
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+        margin: 4px 4px;
+        box-shadow: 0 4px 12px rgba(93, 59, 142, 0.15);
+      }
+      .info-pill a {
+        color: #5d3b8e;
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .info-pill a:hover {
+        text-decoration: underline;
       }
       header p {
-        opacity: 0.9;
+        opacity: 1;
         font-size: 14px;
       }
       .section {
@@ -41,7 +93,7 @@
         border-radius: 16px;
         padding: 24px;
         margin-bottom: 24px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 24px rgba(93, 59, 142, 0.15);
       }
       .section h2 {
         font-size: 20px;
@@ -256,21 +308,25 @@
   <body>
     <div class="container">
       <header>
-        <h1>🎾 AS Cup</h1>
-        <p>2 lapangan · 12 pasangan · 10:00 – 17:00</p>
-        <p style="margin-top: 6px; font-size: 14px;">
-          📍
-          <a
-            href="https://www.google.com/maps/place/Vlocity+Arena/data=!4m2!3m1!1s0x0:0xacb651b49194e2c7?sa=X&ved=1t:2428&ictx=111"
-            target="_blank"
-            rel="noopener"
-            style="color: #fff; font-weight: 700; text-decoration: underline;"
-            ><strong>Vlocity Arena</strong> ↗</a
+        <div class="brand-mark">🎾 AS</div>
+        <h1>FUN MATCH</h1>
+        <div class="tennis-script">Tennis</div>
+        <p class="tagline">🎾 Let's play. Have fun! 🎾</p>
+        <div>
+          <span class="info-pill">📅 Sabtu, 6 Juni 2026</span>
+          <span class="info-pill">🕐 10:00 – 17:00</span>
+          <span class="info-pill">👕 Jersey Lilac + Putih</span>
+          <span class="info-pill"
+            >📍
+            <a
+              href="https://www.google.com/maps/place/Vlocity+Arena/data=!4m2!3m1!1s0x0:0xacb651b49194e2c7?sa=X&ved=1t:2428&ictx=111"
+              target="_blank"
+              rel="noopener"
+              >Vlocity Arena ↗</a
+            ></span
           >
-        </p>
-        <p style="margin-top: 6px; font-size: 14px;">
-          👕 <strong>Dresscode:</strong> Jersey Lilac + Celana Putih
-        </p>
+          <span class="info-pill">2 lapangan · 12 pasangan</span>
+        </div>
       </header>
 
       <!-- GRUP -->
@@ -432,14 +488,14 @@
             <tr class="knockout-row">
               <td class="match-num">M14</td>
               <td class="time">14:40</td>
-              <td><strong>QF-1:</strong> Juara A vs Runner-up B</td>
+              <td><strong>QF-1:</strong> Juara A vs Juara D</td>
               <td><strong>QF-3:</strong> Juara B vs Runner-up A</td>
             </tr>
             <tr class="knockout-row">
               <td class="match-num">M15</td>
               <td class="time">15:00</td>
               <td><strong>QF-2:</strong> Juara C vs Runner-up D</td>
-              <td><strong>QF-4:</strong> Juara D vs Runner-up C</td>
+              <td><strong>QF-4:</strong> Runner-up B vs Runner-up C</td>
             </tr>
             <tr class="knockout-row">
               <td class="match-num">M16</td>
